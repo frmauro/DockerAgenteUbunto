@@ -16,7 +16,37 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libunwind8 \
     netcat \
     libssl1.0 \
-  && rm -rf /var/lib/apt/lists/*
+    maven \
+    time \
+    unzip \
+    wget \
+    zip \
+    tzdata \
+    apt-utils \
+    apt-transport-https \
+    xvfb \
+    sudo \
+    nodejs \
+    gnupg-agent \
+    software-properties-common \
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /etc/apt/sources.list.d/*
+
+  RUN curl https://packages.microsoft.com/config/ubuntu/16.04/packages-microsoft-prod.deb > packages-microsoft-prod.deb \
+  && dpkg -i packages-microsoft-prod.deb \
+  && rm packages-microsoft-prod.deb \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends \
+     apt-transport-https \
+     dotnet-sdk-2.1 \
+     dotnet-sdk-3.1 \
+     dotnet-sdk-5.0 \
+     dotnet-sdk-6.0 \
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /etc/apt/sources.list.d/*
+
+RUN dotnet help
+ENV dotnet=/usr/bin/dotnet  
 
 RUN curl -LsS https://aka.ms/InstallAzureCLIDeb | bash \
   && rm -rf /var/lib/apt/lists/*
